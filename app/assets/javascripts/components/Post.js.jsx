@@ -11,6 +11,21 @@ var Post = React.createClass({
 	// 	alert('works');
 	// },
 
+	deleteNote: function(postID){
+		debugger
+		$.ajax({
+			url: '/notes/' + postID,
+			type: 'DELETE',
+			success: function(data){
+				alert('deleted');
+			},
+			error: function(){
+				
+			}
+
+		});
+	},
+
 	submitPost: function(e){
 		e.preventDefault();
 		var self = this;
@@ -24,7 +39,7 @@ var Post = React.createClass({
 			success: function(item){
 				var items = self.state.post;
 				// var items = self.state.posts;
-				items.push({name: item.postName, description: item.postDescription, priority: item.postPriority});
+				items.push(item);
 				// self.setState({items: items, showAdd: false, itemName: null});
 			},
 			error: function() {
@@ -46,9 +61,7 @@ var Post = React.createClass({
 
 	},
 
-	deleteNote: function(e){
-		debugger
-	},
+	
 
 	displayPosts: function() {
 	
@@ -64,7 +77,7 @@ var Post = React.createClass({
 											<p> Priority: </p>
 											{this.state.post[i].priority}
 											<br/>
-											<button onClick={deleteNote()}> Remove </button>
+											<button onClick={this.deleteNote.bind(this, this.state.post[i].id)}> Remove </button>
 										</div>
 									</div>
 				);

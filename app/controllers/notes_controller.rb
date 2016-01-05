@@ -13,6 +13,13 @@ class NotesController < ApplicationController
     render json: post
   end
 
+  def destroy
+  	@post = Post.find(params[:id])
+  	@post.destroy
+  	render json: @post
+
+  end
+
   private
 
   def note_params
